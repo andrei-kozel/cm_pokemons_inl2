@@ -5,20 +5,26 @@ import { AuthenticationContext } from "../../shared/provider/auth";
 export const SignInView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const [user, setUser] = useContext(AuthenticationContext);
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    const usr = { name: username, password: password };
-    setUser(usr);
-    localStorage.setItem("user", JSON.stringify(usr));
+    setError("");
+    if (username.length && password.length) {
+      const usr = { name: username, password: password };
+      setUser(usr);
+      localStorage.setItem("user", JSON.stringify(usr));
+    } else {
+      setError("Please, fill the form!");
+    }
   };
 
   if (user) {
     return (
       <p className="flex items-center justify-center min-h-screen">
-        Hello, {user.name}
+        Hello, {user.name}. You are logged in!
       </p>
     );
   }
@@ -31,7 +37,7 @@ export const SignInView = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="username"
           >
-            Username
+            Username*
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -39,25 +45,32 @@ export const SignInView = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={({ target }) => setUsername(target.value)}
+            onChange={({ target }) => {
+              setError("");
+              setUsername(target.value);
+            }}
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-2">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="password"
           >
-            Password
+            Password*
           </label>
           <input
             className="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
-            placeholder="******************"
+            placeholder="********"
             value={password}
-            onChange={({ target }) => setPassword(target.value)}
+            onChange={({ target }) => {
+              setError("");
+              setPassword(target.value);
+            }}
           />
         </div>
+        <p className="text-sm mb-4 text-red-400">{error}</p>
         <div className="flex items-center justify-between">
           <Link
             to="/"

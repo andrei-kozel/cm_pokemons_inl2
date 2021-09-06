@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthenticationContext } from "../../shared/provider/auth";
 
 export const SignInView = () => {
@@ -8,6 +8,7 @@ export const SignInView = () => {
   const [error, setError] = useState("");
 
   const [user, setUser] = useContext(AuthenticationContext);
+  const history = useHistory();
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ export const SignInView = () => {
       const usr = { name: username, password: password };
       setUser(usr);
       localStorage.setItem("user", JSON.stringify(usr));
+      history.push("/");
     } else {
       setError("Please, fill the form!");
     }
@@ -72,13 +74,12 @@ export const SignInView = () => {
         </div>
         <p className="text-sm mb-4 text-red-400">{error}</p>
         <div className="flex items-center justify-between">
-          <Link
-            to="/"
+          <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={handleSignIn}
           >
             Sign In
-          </Link>
+          </button>
         </div>
       </form>
     </div>

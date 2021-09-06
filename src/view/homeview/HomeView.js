@@ -57,21 +57,22 @@ export const HomeView = () => {
     }
     const randomPokemonId = getRandomNumber();
     const tmpPokemon = allPokemons[randomPokemonId];
-    console.log(tmpPokemon);
     getOnePokemon(tmpPokemon.url);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
-      <div className="border-solid border-4 border-blue-400 p-4 bg-red rounded-md">
-        {isLoading ? <Spinner /> : null}
-        {pokemon ? (
+      {error ? <p className="text-sm mb-4 text-red-400">{error}</p> : null}
+
+      {isLoading ? <Spinner /> : null}
+      {pokemon ? (
+        <div className="border-solid border-2 border-blue-400 p-4 bg-red rounded-md">
           <div>
             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             <p>{pokemon.name}</p>
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-8 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={handleCatchPokemon}

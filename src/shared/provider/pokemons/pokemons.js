@@ -1,11 +1,20 @@
-import React, { createContext, useState, useContext } from "react";
-import { AuthenticationContext } from "../auth";
+import React, { createContext, useState, useEffect } from "react";
 
-export const PokemonContext = React.createContext(null);
+export const PokemonContext = createContext(null);
 
 export const PokemonContextProvider = ({ children }) => {
-  const [user, setUser] = useContext(AuthenticationContext);
-  const [pokemons, setPokemons] = useState();
+  const [pokemons, setPokemons] = useState([]);
+
+  useEffect(() => {
+    const localPokemons = localStorage.getItem("pokemons");
+    if (localPokemons) {
+      setPokemons(JSON.parse(localPokemons));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("pokemons", JSON.stringify(pokemons));
+  }, [pokemons]);
 
   return (
     <PokemonContext.Provider value={[pokemons, setPokemons]}>

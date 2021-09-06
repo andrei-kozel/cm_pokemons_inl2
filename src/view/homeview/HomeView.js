@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Spinner } from "../../components/spinner/Spinner";
+import { PokemonContext } from "../../shared/provider/pokemons/pokemons";
+import { AuthenticationContext } from "../../shared/provider/auth";
 
 export const HomeView = () => {
   const [error, setError] = useState("");
   const [allPokemons, setAllPokemons] = useState([]);
   const [pokemon, setPokemon] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [pokemons, setPokemons] = useContext(PokemonContext);
+  const [user] = useContext(AuthenticationContext);
 
   useEffect(() => {
     getPokemons();
@@ -37,7 +41,7 @@ export const HomeView = () => {
       .then(
         (result) => {
           setIsLoading(false);
-          setPokemon(result);
+          setPokemon({ ...result, owner: user });
         },
         (error) => {
           console.log(error);
@@ -60,6 +64,10 @@ export const HomeView = () => {
     getOnePokemon(tmpPokemon.url);
   };
 
+  const savePokemon = () => {
+    setPokemons([...pokemons, pokemon]);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
       {error ? <p className="text-sm mb-4 text-red-400">{error}</p> : null}
@@ -79,6 +87,14 @@ export const HomeView = () => {
       >
         Catch pokemon
       </button>
+      {pokemon ? (
+        <button
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold mt-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={savePokemon}
+        >
+          Save
+        </button>
+      ) : null}
     </div>
   );
 };

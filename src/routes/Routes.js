@@ -5,6 +5,7 @@ import { HomeView } from "../view/homeview/HomeView";
 import { HistoryView } from "../view/historyview/HistoryView";
 import { SignInView } from "../view/signinview/SignInView";
 import { AuthenticationContext } from "../shared/provider/auth";
+import { NotFoundView } from "../view/NotFoundView/NotFoundView";
 
 export const Routes = ({ children }) => {
   const [user] = useContext(AuthenticationContext);
@@ -13,9 +14,9 @@ export const Routes = ({ children }) => {
     <BrowserRouter>
       {children}
       <Switch>
-        <Route exac path={RoutingPath.signInView} component={SignInView} />
+        <Route exact path={RoutingPath.signInView} component={SignInView} />
         <Route
-          exac
+          exact
           path={RoutingPath.historyview}
           render={() => {
             return user ? (
@@ -26,6 +27,7 @@ export const Routes = ({ children }) => {
           }}
         />
         <Route
+          exact
           path={RoutingPath.homeView}
           render={() => {
             return user ? (
@@ -35,6 +37,9 @@ export const Routes = ({ children }) => {
             );
           }}
         />
+
+        {/* Fallback route */}
+        <Route component={NotFoundView} />
       </Switch>
     </BrowserRouter>
   );

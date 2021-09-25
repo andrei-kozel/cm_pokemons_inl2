@@ -5,7 +5,7 @@ import { HomeView } from "../view/homeview/HomeView";
 import { HistoryView } from "../view/historyview/HistoryView";
 import { SignInView } from "../view/signinview/SignInView";
 import { AuthenticationContext } from "../shared/provider/auth";
-import { NotFoundView } from "../view/notfoundview/NotFoundView";
+import { NotFoundView } from "../view/404view/NotFoundView";
 import { PokemonView } from "../view/pokemon/PokemonView";
 
 export const Routes = ({ children }) => {

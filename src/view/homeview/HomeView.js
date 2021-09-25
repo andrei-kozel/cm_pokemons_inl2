@@ -69,14 +69,18 @@ export const HomeView = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
+    <div className="flex flex-col items-center justify-center mt-24">
       {error ? <p className="text-sm mb-4 text-red-400">{error}</p> : null}
 
       {isLoading ? <Spinner /> : null}
       {pokemon ? (
-        <div className="border-solid border-2 border-blue-400 p-4 bg-red rounded-md">
-          <div>
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <div className="border-solid border-2 border-blue-400 p-4 bg-red rounded-md ">
+          <div className="flex flex-col justify-center items-center">
+            <img
+              src={pokemon.sprites.front_default}
+              alt={pokemon.name}
+              className="w-72"
+            />
             <p>{pokemon.name}</p>
           </div>
         </div>

@@ -1,10 +1,12 @@
 const homeView = "/";
 const signInView = "/signin";
-const historyview = "/history";
+const historyView = "/history";
+const pokemonView = "/pokemon";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   homeView,
   signInView,
-  historyview,
+  historyView,
+  pokemonView,
 };
